@@ -1,8 +1,6 @@
 const raquetaAltura = 80, raquetaAncho = 10;
 const canvas = document.getElementById("canvas");
 const ctx = canvas.getContext("2d");
-let puntuacionj=document.getElementById("player")
-let puntuaciono=document.getElementById("computer")
 
 const player = {
     x: 0,
@@ -93,13 +91,9 @@ function actualizar() {
 
     if (collision(ball, player)) {
         ball.dx = -ball.dx;
-        player.puntuacion++
-        puntuacionj.textContent(puntuacion)
     }
     if (collision(ball, computer)) {
         ball.dx = -ball.dx;
-        computer.puntuacion++
-        puntuaciono.textContent(puntuacion)
     }
 
     if (ball.x < 0 || ball.x > canvas.width) {
