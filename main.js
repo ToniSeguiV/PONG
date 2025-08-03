@@ -8,7 +8,8 @@ const player = {
     ancho: raquetaAncho,
     alto: raquetaAltura,
     color: "white",
-    dy: 10
+    dy: 10,
+    puntuacion:0
 };
 
 const computer = {
@@ -17,7 +18,8 @@ const computer = {
     ancho: raquetaAncho,
     alto: raquetaAltura,
     color: "white",
-    dy: 4
+    dy: 4,
+    puntuacion:0
 };
 
 const ball = {
@@ -89,9 +91,12 @@ function actualizar() {
 
     if (collision(ball, player)) {
         ball.dx = -ball.dx;
+        player.puntuacion++
     }
     if (collision(ball, computer)) {
         ball.dx = -ball.dx;
+        computer.puntuacion++
+        
     }
 
     if (ball.x < 0 || ball.x > canvas.width) {
