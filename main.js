@@ -2,6 +2,12 @@ const raquetaAltura = 80, raquetaAncho = 10;
 const canvas = document.getElementById("canvas");
 const ctx = canvas.getContext("2d");
 
+const puntuacionJU = document.getElementById("puntuacion");
+const puntuacionOR = document.getElementById("puntuacion2");
+
+let puntuacion1 = 0;
+let puntuacion2 = 0;
+
 const player = {
     x: 0,
     y: canvas.height / 2 - raquetaAltura / 2,
@@ -61,17 +67,11 @@ function draw() {
 }
 
 function actualizar() {
-
-    if (upPressed) {
-        player.y -= player.dy;
-    }
-    if (downPressed) {
-        player.y += player.dy;
-    }
+    if (upPressed) player.y -= player.dy;
+    if (downPressed) player.y += player.dy;
 
     player.y = Math.max(0, Math.min(canvas.height - player.alto, player.y));
 
-    // Mover pelota
     ball.x += ball.dx;
     ball.y += ball.dy;
 
@@ -84,7 +84,6 @@ function actualizar() {
     } else {
         computer.y += computer.dy;
     }
-
     computer.y = Math.max(0, Math.min(canvas.height - computer.alto, computer.y));
 
     if (collision(ball, player)) {
@@ -94,28 +93,38 @@ function actualizar() {
         ball.dx = -ball.dx;
     }
 
-    if (ball.x < 0 || ball.x > canvas.width) {
+    if (ball.x < 0) {
+        puntuacion2++;
+        puntuacionOR.textContent = puntuacion2;
+        resetBall();
+    } else if (ball.x > canvas.width) {
+        puntuacion1++;
+        puntuacionJU.textContent = puntuacion1;
         resetBall();
     }
 }
 
 function collision(b, p) {
-    return b.x - b.radio < p.x + p.ancho &&
-           b.x + b.radio > p.x &&
-           b.y - b.radio < p.y + p.alto &&
-           b.y + b.radio > p.y;
+    return (
+        b.x - b.radio < p.x + p.ancho &&
+        b.x + b.radio > p.x &&
+        b.y - b.radio < p.y + p.alto &&
+        b.y + b.radio > p.y
+    );
 }
 
 function resetBall() {
     ball.x = canvas.width / 2;
     ball.y = canvas.height / 2;
     ball.dx *= -1;
+    ball.dy *= -1;
 }
 
 document.addEventListener("keydown", function (e) {
     if (e.key === "ArrowUp") upPressed = true;
     if (e.key === "ArrowDown") downPressed = true;
 });
+
 document.addEventListener("keyup", function (e) {
     if (e.key === "ArrowUp") upPressed = false;
     if (e.key === "ArrowDown") downPressed = false;
