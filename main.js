@@ -14,7 +14,8 @@ const player = {
     ancho: raquetaAncho,
     alto: raquetaAltura,
     color: "white",
-    dy: 10
+    dy: 10,
+    puntuacion:0
 };
 
 const computer = {
@@ -23,7 +24,8 @@ const computer = {
     ancho: raquetaAncho,
     alto: raquetaAltura,
     color: "white",
-    dy: 4
+    dy: 4,
+    puntuacion:0
 };
 
 const ball = {
