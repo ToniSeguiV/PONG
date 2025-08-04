@@ -14,7 +14,7 @@ const player = {
     ancho: raquetaAncho,
     alto: raquetaAltura,
     color: "white",
-    dy: 10,
+    dy: 4,
     puntuacion:0
 };
 
@@ -23,7 +23,7 @@ const computer = {
     y: canvas.height / 2 - raquetaAltura / 2,
     ancho: raquetaAncho,
     alto: raquetaAltura,
-    color: "white",
+    color: "red",
     dy: 4,
     puntuacion:0
 };
@@ -81,11 +81,26 @@ function actualizar() {
         ball.dy *= -1;
     }
 
-    if (ball.y < computer.y + computer.alto / 2) {
-        computer.y -= computer.dy;
-    } else {
-        computer.y += computer.dy;
+    // Lógica para IA: seguimiento con error controlado
+    let errorProbabilidad = 0.1; // 10% de las veces comete error grande
+    let errorMargen = (Math.random() - 0.5) * 20; // error leve normal
+
+    if (Math.random() < errorProbabilidad) {
+        errorMargen = (Math.random() - 0.5) * 100; // error más grande
     }
+
+    let targetY = ball.y - computer.alto / 2 + errorMargen;
+
+    // Movimiento con velocidad limitada
+    let movimiento = (targetY - computer.y) * 0.1;
+    let maxSpeed = 4.5;
+    movimiento = Math.max(-maxSpeed, Math.min(maxSpeed, movimiento));
+
+    computer.y += movimiento;
+
+    // Mantener dentro del canvas
+    computer.y = Math.max(0, Math.min(canvas.height - computer.alto, computer.y));
+
     computer.y = Math.max(0, Math.min(canvas.height - computer.alto, computer.y));
 
     if (collision(ball, player)) {
