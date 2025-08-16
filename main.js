@@ -81,24 +81,21 @@ function actualizar() {
         ball.dy *= -1;
     }
 
-    // Lógica para IA: seguimiento con error controlado
-    let errorProbabilidad = 0.1; // 10% de las veces comete error grande
-    let errorMargen = (Math.random() - 0.5) * 20; // error leve normal
+    let errorProbabilidad = 0.1; 
+    let errorMargen = (Math.random() - 0.5) * 20; 
 
     if (Math.random() < errorProbabilidad) {
-        errorMargen = (Math.random() - 0.5) * 100; // error más grande
+        errorMargen = (Math.random() - 0.5) * 100; 
     }
 
     let targetY = ball.y - computer.alto / 2 + errorMargen;
 
-    // Movimiento con velocidad limitada
     let movimiento = (targetY - computer.y) * 0.1;
     let maxSpeed = 4.5;
     movimiento = Math.max(-maxSpeed, Math.min(maxSpeed, movimiento));
 
     computer.y += movimiento;
 
-    // Mantener dentro del canvas
     computer.y = Math.max(0, Math.min(canvas.height - computer.alto, computer.y));
 
     computer.y = Math.max(0, Math.min(canvas.height - computer.alto, computer.y));
